@@ -58,19 +58,19 @@ def main():
     # We now keep distinct sets of args, for a cleaner separation of concerns.
     parser = HfArgumentParser((DataArguments))
     data_args = parser.parse_args_into_dataclasses()[0]
-
     with h5py.File(data_args.indexed_path, 'r') as f:
         with open(data_args.inputtext_path, 'r') as f_in:
             
             print("The number of keys in h5: {}".format(len(f)))
             for i, input in enumerate(f_in):
                 entity_name = input.strip()
-                
                 embedding = f[entity_name]['embedding'][:]
-                
+                a = f[entity_name]['embedding']
                 print("entity_name = {}".format(entity_name))
-                print("embedding = {}".format(embedding))
-                
+                print(f'Type of embedding parent: {type(a)}')
+                print(f'Type of embedding: {type(embedding)}')
+                print("embedding shape = {}".format(embedding.shape))
+                # print("embedding = {}".format(embedding))
                 break
 
 def _mp_fn(index):
